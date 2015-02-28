@@ -8,7 +8,8 @@ RSpec.describe Hand do
   let(:card4) { Card.new("clubs", 2) }
   let(:card5) { Card.new("clubs", 8) }
   let(:card6) { Card.new("clubs", 9) }
-  let(:hand) { Hand.new([card1, card2]) }
+  let(:card7) { Card.new("diamonds", 5) }
+  let(:hand) { Hand.new([card1, card2, card7, card6, card5]) }
   let(:hand1) { Hand.new([card2, card3, card4, card5, card6]) }
 
   describe '#cards' do
@@ -40,7 +41,7 @@ RSpec.describe Hand do
 
   describe '#<=>' do
     it "returns -1 when the hand on the left beats the right" do
-      expect(hand1 <=> hand).to eq(-1)
+      expect(hand <=> hand1).to eq(-1)
     end
     it "returns 1 when the hand on the right beats the left" do
       expect(hand1 <=> hand).to eq(1)
