@@ -1,7 +1,11 @@
 require 'deck'
 
 class Hand
-  attr_reader :cards
+  attr_accessor :cards
+
+  def self.deal_from(deck)
+    Hand.new(deck.take(5))
+  end
 
   def initialize(cards = [])
     @cards = cards
@@ -9,11 +13,6 @@ class Hand
 
   def <=>(other_hand)
     self.value <=> other_hand.value
-  end
-
-  def deal_from(deck, n = 5)
-    @cards += deck.take(n)
-    self
   end
 
   def value
@@ -36,6 +35,21 @@ class Hand
     else
       1
     end
+  end
+
+  def discard(cards, deck)
+    if cards.none?{ |card| self.cards.include?(card) }
+      raise "Card not in hand"
+    elsif cards.length > 3
+      raise "Can only drop up to 3 cards"
+    else
+      self.cards.delete_if { |card| cards.include?(card) }
+      deal_new(cards.count, deck)
+    end
+  end
+
+  def deal_new(n, deck)
+    self.cards += deck.take(n)
   end
 
   private

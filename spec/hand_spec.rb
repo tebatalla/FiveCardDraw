@@ -1,7 +1,7 @@
 require 'rspec'
 require 'hand'
 
-RSpec.describe Hand do
+describe Hand do
   let(:card1) { Card.new("spades", 14) }
   let(:card2) { Card.new("clubs", 14) }
   let(:card3) { Card.new("clubs", 3) }
@@ -30,11 +30,11 @@ RSpec.describe Hand do
   end
 
   describe '#deal_from' do
-    it "receives 2 cards from the top of the deck" do
-      deck_cards = [card1, card2]
+    it "receives 5 cards from the top of the deck" do
+      deck_cards = [card1, card2, card3, card4, card5]
       deck = double("deck")
-      expect(deck).to receive(:take).with(2).and_return(deck_cards)
-      hand = Hand.new.deal_from(deck, 2)
+      expect(deck).to receive(:take).with(5).and_return(deck_cards)
+      hand = Hand.deal_from(deck)
       expect(hand.cards).to eq(deck_cards)
     end
   end
@@ -43,8 +43,31 @@ RSpec.describe Hand do
     it "returns -1 when the hand on the left beats the right" do
       expect(hand <=> hand1).to eq(-1)
     end
-    it "returns 1 when the hand on the right beats the left" do
-      expect(hand1 <=> hand).to eq(1)
+  end
+
+  describe '#discard' do
+    it 'discards the cards in the array given' do
+      deck_cards = [card3, card4, card5]
+      hand.discard([card1, card2], deck_cards)
+      expect(hand.cards).not_to include(card1, card2)
+    end
+
+    it 'raises an error when you discard a card not in your hand' do
+      deck_cards = [card1, card2, card3, card4, card5]
+      expect{ hand.discard([card3], deck_cards) }.to raise_error
+    end
+
+    it 'raises an error when you discard too many cards' do
+      deck_cards = [card1, card2, card3, card4, card5]
+      expect{ hand.discard([card1, card2, card7, card6], deck_cards) }.to raise_error
+    end
+  end
+
+  describe '#deal_new' do
+    it 'should receive two new cards' do
+      deck_cards = [card1, card2, card3, card4, card5]
+      hand.deal_new(2, deck_cards)
+      expect(hand.cards.count).to eq(7)
     end
   end
 end
