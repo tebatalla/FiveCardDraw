@@ -1,14 +1,14 @@
 class Player
-  attr_accessor :pot, :hand
+  attr_accessor :bankroll, :hand
 
-  def initialize(name, pot)
+  def initialize(name, bankroll)
     @name = name
-    @pot = pot
+    @bankroll = bankroll
   end
 
   def action(game)
     input = 's'
-    while input == s && pot < game.current_bet
+    while input == s && bankroll < game.current_bet
       begin
         puts "What would you like to do?"
         input = gets.chomp.downcase
@@ -17,12 +17,12 @@ class Player
         elsif input == 'f'
           game.fold(player)
         elsif input == 'c'
-          pot -= game.current_bet
+          bankroll -= game.current_bet
           game.pot += game.current_bet
         elsif input == 'r'
-          raise NotEnoughMoney if pot < (game.current_bet * 2)
+          raise NotEnoughMoney if bankroll < (game.current_bet * 2)
           game.current_bet *= 2
-          pot -= game.current_bet
+          bankroll -= game.current_bet
           game.pot += game.current_bet
         end
       rescue NotEnoughMoney

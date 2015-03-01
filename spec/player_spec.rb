@@ -11,11 +11,11 @@ describe Player do
     end
   end
 
-  describe '#pot' do
-    it 'returns value of the pot' do
-      pot = 10_000
-      player.pot = pot
-      expect(player.pot).to eq(pot)
+  describe '#bankroll' do
+    it 'returns value of the bankroll' do
+      bankroll = 10_000
+      player.bankroll = bankroll
+      expect(player.bankroll).to eq(bankroll)
     end
   end
 end
