@@ -71,16 +71,3 @@ describe Hand do
     end
   end
 end
-
-
-
-# 2.send(:+, 1) == 2 + 1
-#
-# def direction
-#   :+ : :-
-# end
-#
-# pos.send(direction, 1)
-
-
-# hand1 <=> hand2
